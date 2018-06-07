@@ -1,3 +1,6 @@
 [submodule "others/it-projects-pos-addons"]
 	path = others/it-projects-pos-addons
 	url = git@github.com:/ClearCorp/it-projects-pos-addons
+[submodule "others/it-projects-misc-addons"]
+	path = others/it-projects-misc-addons
+	url = git@github.com:/ClearCorp/it-projects-misc-addons
