@@ -1,0 +1,3 @@
+[submodule "others/it-projects-pos-addons"]
+	path = others/it-projects-pos-addons
+	url = git@github.com:/ClearCorp/it-projects-pos-addons
