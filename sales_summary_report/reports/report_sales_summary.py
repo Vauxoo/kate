@@ -50,7 +50,7 @@ class SaleSummaryReport(models.AbstractModel):
                 ai.state IN %s
                 AND date_invoice >= %s
                 AND date_invoice <= %s
-                AND ai.type IN %s
+                AND ai.type = %s
 
         """)
         params = (STATE, form_data['start_date'], form_data['end_date'], type)
@@ -72,7 +72,7 @@ class SaleSummaryReport(models.AbstractModel):
                 ai.state IN %s
                 AND date_invoice >= %s
                 AND date_invoice <= %s
-                AND ai.type IN %s
+                AND ai.type = %s
             GROUP BY cr.id
 
         """)
@@ -85,8 +85,8 @@ class SaleSummaryReport(models.AbstractModel):
     def _get_sales_summary_data(self, form_data):
         return {
             'products': self._get_products_with_qty(form_data),
-            'invoices': self._get_invoices_data(form_data, ('out_invoice', 'in_invoice')),
-            'credit_notes': self._get_invoices_data(form_data, ('out_refund', 'in_refund')),
+            'invoices': self._get_invoices_data(form_data, 'out_invoice'),
+            'credit_notes': self._get_invoices_data(form_data, 'out_refund'),
             'start_date': form_data['start_date'],
             'end_date': form_data['end_date'],
             'user': self.env.user.name,
