@@ -26,13 +26,13 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-12 mt8">
-                            <t t-call="clearcorp_report.products"/>
+                            <t t-call="sales_summary_report.products"/>
                         </div>
                         <div class="col-xs-12 mt8">
-                            <t t-call="clearcorp_report.invoices"/>
+                            <t t-call="sales_summary_report.invoices"/>
                         </div>
                         <div class="col-xs-12 mt8">
-                            <t t-call="clearcorp_report.credit_notes"/>
+                            <t t-call="sales_summary_report.credit_notes"/>
                         </div>
                     </div>
                 </div>
@@ -110,7 +110,7 @@
     <template id="invoices">
         <div style="page-break-inside:avoid;">
             <h3>Invoices</h3>
-            <t t-call="clearcorp_report.invoices_table">
+            <t t-call="sales_summary_report.invoices_table">
                 <t t-set="invoices" t-value="datas['invoices'][0]"/>
                 <t t-set="invoices_by_cr" t-value="datas['invoices'][1]"/>
             </t>
@@ -120,7 +120,7 @@
     <template id="credit_notes">
         <div style="page-break-inside:avoid;">
             <h3>Credit Notes</h3>
-            <t t-call="clearcorp_report.invoices_table">
+            <t t-call="sales_summary_report.invoices_table">
                 <t t-set="invoices" t-value="datas['credit_notes'][0]"/>
                 <t t-set="invoices_by_cr" t-value="datas['credit_notes'][1]"/>
             </t>
