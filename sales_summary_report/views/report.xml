@@ -6,8 +6,8 @@
             string="Sales Summary"
             model="account.invoice"
             report_type="qweb-pdf"
-            name="clearcorp_report.report_salessummary"
-            file="clearcorp_report.report_salessummary"
+            name="sales_summary_report.report_salessummary"
+            file="sales_summary_report.report_salessummary"
             menu="False"/>
 
 </odoo>

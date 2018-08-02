@@ -8,7 +8,7 @@ STATE = ('open', 'paid')
 
 
 class SaleSummaryReport(models.AbstractModel):
-    _name = 'report.clearcorp_report.report_salessummary'
+    _name = 'report.sales_summary_report.report_salessummary'
 
     def _get_products_with_qty(self, form_data):
         query = ("""
@@ -98,7 +98,7 @@ class SaleSummaryReport(models.AbstractModel):
         if not data.get('form'):
             raise UserError(_("Form content is missing, this report cannot be printed."))
 
-        salessummary_report = self.env['ir.actions.report']._get_report_from_name('clearcorp_report.report_salessummary')
+        salessummary_report = self.env['ir.actions.report']._get_report_from_name('sales_summary_report.report_salessummary')
         docargs = {
             'doc_ids': [],
             'doc_model': salessummary_report.model,
