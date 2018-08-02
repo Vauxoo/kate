@@ -17,7 +17,10 @@ Sales Summary Reports
 
         'wizard/sales_summary_wizard_view.xml',
 
+        'reports/report_sales_summary_view.xml',
+
         'views/account_view.xml',
+        'views/report.xml',
 
     ],
     'demo': [],

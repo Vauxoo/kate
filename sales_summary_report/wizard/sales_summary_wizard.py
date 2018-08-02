@@ -25,5 +25,4 @@ class SalesSummaryWizard(models.TransientModel):
             'model': 'account.invoice',
             'form': data
         }
-        #TODO WIP
-        return True
+        return self.env.ref('clearcorp_report.action_report_sales_summary').with_context(from_transient_model=True).report_action(self.env['account.invoice'], data=datas)
