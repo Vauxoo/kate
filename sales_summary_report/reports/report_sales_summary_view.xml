@@ -51,15 +51,27 @@
         <table class="table table-condensed" style="page-break-inside:avoid;">
             <thead>
                 <tr>
-                    <th>Name</th>
+                    <th>Product</th>
                     <th class="text-right">Total</th>
                 </tr>
             </thead>
             <tbody>
+                <t t-set="undf_product_qty" t-value="0"/>
                 <t t-foreach="datas['products']" t-as="product">
+                    <t t-if="product['name']">
+                        <tr>
+                            <td><t t-esc="product['name']"/></td>
+                            <td class="text-right"><t t-esc="product['qty']"/></td>
+                        </tr>
+                    </t>
+                    <t t-else="">
+                        <t t-set="undf_product_qty" t-value="undf_product_qty + product['qty']"/>
+                    </t>
+                </t>
+                <t t-if="undf_product_qty > 0">
                     <tr>
-                        <td><t t-esc="product.get('name', 'Undefined') or 'Undefined'"/></td>
-                        <td class="text-right"><t t-esc="product.get('qty', 0)"/></td>
+                        <td>Undefined</td>
+                        <td class="text-right"><t t-esc="undf_product_qty"/></td>
                     </tr>
                 </t>
             </tbody>
