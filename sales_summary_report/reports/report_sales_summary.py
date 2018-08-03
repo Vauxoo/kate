@@ -13,13 +13,19 @@ class SaleSummaryReport(models.AbstractModel):
     def _get_products_with_qty(self, form_data):
         query = ("""
             SELECT
-                sum(ail.quantity) AS qty,
+                sum((CASE
+                    WHEN ai.type = 'out_invoice'
+                        THEN
+                            ail.quantity
+                        ELSE
+                            -ail.quantity
+                END)) AS qty,
                 pt.name
             FROM account_invoice_line ail
                 LEFT JOIN account_invoice ai ON ai.id = ail.invoice_id
                 LEFT JOIN product_product pp ON pp.id = ail.product_id
                 LEFT JOIN product_template pt ON pt.id = pp.product_tmpl_id
-            WHERE ai.state IN %s AND date_invoice >= %s AND date_invoice <= %s
+            WHERE ai.state IN %s AND date_invoice >= %s AND date_invoice <= %s AND ai.type IN ('out_invoice', 'out_refund')
             GROUP BY pt.id
 
         """)
