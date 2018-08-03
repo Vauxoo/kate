@@ -34,6 +34,12 @@
                         <div class="col-xs-12 mt8">
                             <t t-call="sales_summary_report.credit_notes"/>
                         </div>
+                        <div class="col-xs-12 mt8">
+                            <t t-call="sales_summary_report.customer_payments"/>
+                        </div>
+                        <div class="col-xs-12 mt8">
+                            <t t-call="sales_summary_report.refunds"/>
+                        </div>
                     </div>
                 </div>
             </t>
@@ -123,6 +129,61 @@
             <t t-call="sales_summary_report.invoices_table">
                 <t t-set="invoices" t-value="datas['credit_notes'][0]"/>
                 <t t-set="invoices_by_cr" t-value="datas['credit_notes'][1]"/>
+            </t>
+        </div>
+    </template>
+
+    <template id="payments_table">
+        <table class="table table-condensed" style="page-break-inside:avoid;">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Number</th>
+                    <th>Journal</th>
+                    <th>Customer</th>
+                    <th>Currency</th>
+                    <th class="text-right">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <t t-foreach="payments" t-as="payment">
+                    <tr>
+                        <td><t t-esc="payment['payment_date']"/></td>
+                        <td><t t-esc="payment['name']"/></td>
+                        <td><t t-esc="payment['journal']"/></td>
+                        <td><t t-esc="payment['partner']"/></td>
+                        <td><t t-esc="payment['currency']"/></td>
+                        <td class="text-right"><t t-esc="payment['cr_symbol']"/><t t-esc="payment['amount']"/></td>
+                    </tr>
+                </t>
+
+                <t t-foreach="payments_by_cr" t-as="payment_by_cr">
+                    <tr>
+                        <td/><td/><td/><td/>
+                        <td><b>TOTAL <t t-esc="payment_by_cr['currency']"/></b></td>
+                        <td class="text-right"><b><t t-esc="payment_by_cr['cr_symbol']"/><t t-esc="payment_by_cr['amount']"/></b></td>
+                    </tr>
+                </t>
+            </tbody>
+        </table>
+    </template>
+
+    <template id="customer_payments">
+        <div style="page-break-inside:avoid;">
+            <h3>Customer Payments</h3>
+            <t t-call="sales_summary_report.payments_table">
+                <t t-set="payments" t-value="datas['payments'][0]"/>
+                <t t-set="payments_by_cr" t-value="datas['payments'][1]"/>
+            </t>
+        </div>
+    </template>
+
+    <template id="refunds">
+        <div style="page-break-inside:avoid;">
+            <h3>Refunds</h3>
+            <t t-call="sales_summary_report.payments_table">
+                <t t-set="payments" t-value="datas['refunds'][0]"/>
+                <t t-set="payments_by_cr" t-value="datas['refunds'][1]"/>
             </t>
         </div>
     </template>
