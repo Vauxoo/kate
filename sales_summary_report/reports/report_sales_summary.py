@@ -34,9 +34,9 @@ class SaleSummaryReport(models.AbstractModel):
                 ai.number,
                 ai.date_invoice,
                 p.name AS partner,
-                cr.name as currency,
-                cr.id as currency_id,
-                cr.symbol as cr_symbol,
+                cr.name AS currency,
+                cr.id AS currency_id,
+                cr.symbol AS cr_symbol,
                 ai.amount_untaxed,
                 ai.residual,
                 ai.amount_tax,
@@ -59,8 +59,8 @@ class SaleSummaryReport(models.AbstractModel):
 
         query = ("""
             SELECT
-                cr.name as currency,
-                cr.symbol as cr_symbol,
+                cr.name AS currency,
+                cr.symbol AS cr_symbol,
                 sum(ai.amount_untaxed) AS amount_untaxed,
                 sum(ai.residual) AS residual,
                 sum(ai.amount_tax) AS amount_tax,
@@ -82,11 +82,63 @@ class SaleSummaryReport(models.AbstractModel):
 
         return [res, res1]
 
+    def _get_payments_data(self, form_data, payment_type):
+        query = ("""
+            SELECT
+                ap.name,
+                ap.payment_date,
+                j.name AS journal,
+                c.name AS partner,
+                ap.amount,
+                cr.name AS currency,
+                cr.id AS currency_id,
+                cr.symbol AS cr_symbol
+
+            FROM account_payment ap
+                LEFT JOIN res_partner c ON c.id = ap.partner_id
+                LEFT JOIN res_currency cr ON cr.id = ap.currency_id
+                LEFT JOIN account_journal j ON j.id = ap.journal_id
+            WHERE
+                ap.state IN %s
+                AND payment_date >= %s
+                AND payment_date <= %s
+                AND ap.payment_type = %s
+
+        """)
+        params = (('posted', 'sent', 'reconciled'), form_data['start_date'], form_data['end_date'], payment_type)
+        self.env.cr.execute(query, params)
+        res = self.env.cr.dictfetchall()
+
+        query = ("""
+            SELECT
+                cr.name AS currency,
+                cr.symbol AS cr_symbol,
+                sum(ap.amount) AS amount
+
+            FROM account_payment ap
+                LEFT JOIN res_currency cr ON cr.id = ap.currency_id
+            WHERE
+                ap.state IN %s
+                AND payment_date >= %s
+                AND payment_date <= %s
+                AND ap.payment_type = %s
+                AND partner_type='customer'
+            GROUP BY cr.id
+
+        """)
+        params = (('posted', 'sent', 'reconciled'), form_data['start_date'], form_data['end_date'], payment_type)
+        self.env.cr.execute(query, params)
+        res1 = self.env.cr.dictfetchall()
+
+        return [res, res1]
+
     def _get_sales_summary_data(self, form_data):
         return {
             'products': self._get_products_with_qty(form_data),
             'invoices': self._get_invoices_data(form_data, 'out_invoice'),
             'credit_notes': self._get_invoices_data(form_data, 'out_refund'),
+            'payments': self._get_payments_data(form_data, 'inbound'),
+            'refunds': self._get_payments_data(form_data, 'outbound'),
             'start_date': form_data['start_date'],
             'end_date': form_data['end_date'],
             'user': self.env.user.name,
