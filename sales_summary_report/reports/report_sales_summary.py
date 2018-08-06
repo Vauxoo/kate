@@ -109,6 +109,7 @@ class SaleSummaryReport(models.AbstractModel):
                 AND payment_date >= %s
                 AND payment_date <= %s
                 AND ap.payment_type = %s
+                AND partner_type='customer'
 
         """)
         params = (('posted', 'sent', 'reconciled'), form_data['start_date'], form_data['end_date'], payment_type)
