@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<odoo>
+
+        <report
+            id="action_report_sales_summary"
+            string="Sales Summary"
+            model="account.invoice"
+            report_type="qweb-pdf"
+            name="sales_summary_report.report_salessummary"
+            file="sales_summary_report.report_salessummary"
+            menu="False"/>
+
+</odoo>

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_salessummary">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <center><h3>Sales Summary Report</h3></center>
+                    <div class="row mt32">
+                        <div class="col-xs-3">
+                            <strong>User:</strong>
+                            <p t-esc="datas['user']"/>
+                        </div>
+                        <div class="col-xs-3">
+                            <strong>Start Date:</strong>
+                            <p t-esc="datas['start_date']"/>
+                        </div>
+                        <div class="col-xs-3">
+                            <strong>End Date:</strong>
+                            <p t-esc="datas['end_date']"/>
+                        </div>
+                        <div class="col-xs-3">
+                            <strong>Date:</strong>
+                            <p t-esc="datas['date']"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 mt8">
+                            <t t-call="sales_summary_report.products"/>
+                        </div>
+                        <div class="col-xs-12 mt8">
+                            <t t-call="sales_summary_report.invoices"/>
+                        </div>
+                        <div class="col-xs-12 mt8">
+                            <t t-call="sales_summary_report.credit_notes"/>
+                        </div>
+                        <div class="col-xs-12 mt8">
+                            <t t-call="sales_summary_report.customer_payments"/>
+                        </div>
+                        <div class="col-xs-12 mt8">
+                            <t t-call="sales_summary_report.refunds"/>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <template id="products">
+        <h3>Products</h3>
+        <table class="table table-condensed" style="page-break-inside:avoid;">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th class="text-right">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <t t-set="undf_product_qty" t-value="0"/>
+                <t t-foreach="datas['products']" t-as="product">
+                    <t t-if="product['name']">
+                        <tr>
+                            <td><t t-esc="product['name']"/></td>
+                            <td class="text-right"><t t-esc="product['qty']"/></td>
+                        </tr>
+                    </t>
+                    <t t-else="">
+                        <t t-set="undf_product_qty" t-value="undf_product_qty + product['qty']"/>
+                    </t>
+                </t>
+                <t t-if="undf_product_qty > 0">
+                    <tr>
+                        <td>Undefined</td>
+                        <td class="text-right"><t t-esc="undf_product_qty"/></td>
+                    </tr>
+                </t>
+            </tbody>
+        </table>
+    </template>
+
+    <template id="invoices_table">
+        <table class="table table-condensed">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Currency</th>
+                    <th>Customer</th>
+                    <th>Invoice Number</th>
+                    <th class="text-right">Subtotal</th>
+                    <th class="text-right">Taxes</th>
+                    <th class="text-right">Total</th>
+                    <th class="text-right">Amount Due</th>
+                    <th>State</th>
+                </tr>
+            </thead>
+            <tbody>
+                <t t-foreach="invoices" t-as="invoice">
+                    <tr>
+                        <td><t t-esc="invoice['date_invoice']"/></td>
+                        <td><t t-esc="invoice['currency']"/></td>
+                        <td><t t-esc="invoice['partner']"/></td>
+                        <td><t t-esc="invoice['number']"/></td>
+                        <td class="text-right"><t t-esc="invoice['cr_symbol']"/><t t-esc="invoice['amount_untaxed']"/></td>
+                        <td class="text-right"><t t-esc="invoice['cr_symbol']"/><t t-esc="invoice['amount_tax']"/></td>
+                        <td class="text-right"><t t-esc="invoice['cr_symbol']"/><t t-esc="invoice['amount_total']"/></td>
+                        <td class="text-right"><t t-esc="invoice['cr_symbol']"/><t t-esc="invoice['residual']"/></td>
+                        <td><t t-esc="invoice['state']"/></td>
+                    </tr>
+                </t>
+
+                <t t-foreach="invoices_by_cr" t-as="invoice_by_cr">
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><b>TOTAL <t t-esc="invoice_by_cr['currency']"/></b></td>
+                        <td class="text-right"><b><t t-esc="invoice_by_cr['cr_symbol']"/><t t-esc="invoice_by_cr['amount_untaxed']"/></b></td>
+                        <td class="text-right"><b><t t-esc="invoice_by_cr['cr_symbol']"/><t t-esc="invoice_by_cr['amount_tax']"/></b></td>
+                        <td class="text-right"><b><t t-esc="invoice_by_cr['cr_symbol']"/><t t-esc="invoice_by_cr['amount_total']"/></b></td>
+                        <td class="text-right"><b><t t-esc="invoice_by_cr['cr_symbol']"/><t t-esc="invoice_by_cr['residual']"/></b></td>
+                        <td/>
+                    </tr>
+                </t>
+            </tbody>
+        </table>
+    </template>
+
+    <template id="invoices">
+        <div style="page-break-inside:avoid;">
+            <h3>Invoices</h3>
+            <t t-call="sales_summary_report.invoices_table">
+                <t t-set="invoices" t-value="datas['invoices'][0]"/>
+                <t t-set="invoices_by_cr" t-value="datas['invoices'][1]"/>
+            </t>
+        </div>
+    </template>
+
+    <template id="credit_notes">
+        <div style="page-break-inside:avoid;">
+            <h3>Credit Notes</h3>
+            <t t-call="sales_summary_report.invoices_table">
+                <t t-set="invoices" t-value="datas['credit_notes'][0]"/>
+                <t t-set="invoices_by_cr" t-value="datas['credit_notes'][1]"/>
+            </t>
+        </div>
+    </template>
+
+    <template id="payments_table">
+        <table class="table table-condensed" style="page-break-inside:avoid;">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Number</th>
+                    <th>Journal</th>
+                    <th>Customer</th>
+                    <th>Currency</th>
+                    <th class="text-right">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <t t-foreach="payments" t-as="payment">
+                    <tr>
+                        <td><t t-esc="payment['payment_date']"/></td>
+                        <td><t t-esc="payment['name']"/></td>
+                        <td><t t-esc="payment['journal']"/></td>
+                        <td><t t-esc="payment['partner']"/></td>
+                        <td><t t-esc="payment['currency']"/></td>
+                        <td class="text-right"><t t-esc="payment['cr_symbol']"/><t t-esc="payment['amount']"/></td>
+                    </tr>
+                </t>
+
+                <t t-foreach="payments_by_cr" t-as="payment_by_cr">
+                    <tr>
+                        <td/><td/><td/><td/>
+                        <td><b>TOTAL <t t-esc="payment_by_cr['currency']"/></b></td>
+                        <td class="text-right"><b><t t-esc="payment_by_cr['cr_symbol']"/><t t-esc="payment_by_cr['amount']"/></b></td>
+                    </tr>
+                </t>
+            </tbody>
+        </table>
+    </template>
+
+    <template id="customer_payments">
+        <div style="page-break-inside:avoid;">
+            <h3>Customer Payments</h3>
+            <t t-call="sales_summary_report.payments_table">
+                <t t-set="payments" t-value="datas['payments'][0]"/>
+                <t t-set="payments_by_cr" t-value="datas['payments'][1]"/>
+            </t>
+        </div>
+    </template>
+
+    <template id="refunds">
+        <div style="page-break-inside:avoid;">
+            <h3>Refunds</h3>
+            <t t-call="sales_summary_report.payments_table">
+                <t t-set="payments" t-value="datas['refunds'][0]"/>
+                <t t-set="payments_by_cr" t-value="datas['refunds'][1]"/>
+            </t>
+        </div>
+    </template>
+
+</odoo>
