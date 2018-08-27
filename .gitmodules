@@ -4,3 +4,6 @@
 [submodule "others/it-projects-misc-addons"]
 	path = others/it-projects-misc-addons
 	url = git@github.com:/ClearCorp/it-projects-misc-addons
+[submodule "clearcorp/odoo-einvoicing"]
+	path = clearcorp/odoo-einvoicing
+	url = git@github.com:ClearCorp/odoo-einvoicing
