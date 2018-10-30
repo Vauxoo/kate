@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="dynamic_zbarcode_layout">
+        <!-- Multicompany -->
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id" />
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company" />
+        </t>
+        <div class="article">
+            <t t-raw="0" />
+        </div>
+    </template>
+
+
+    <template id="report_product_tdzebrabarcode">
+        <t t-set="loopvalue" t-value="get_lines(data['form'])" />
+        <t t-foreach="loopvalue" t-as="line">
+            <div class="page">
+                <t t-call="td_zebra_barcode_labels.dynamic_zbarcode_layout">
+                <table
+                    style="width:100%;text-align: center;border-color: white;">
+                    <tr valign="center" style="background-color:white;">
+                        <td valign="center" t-attf-style="width:50%;padding-top: #{config.first_padding_top or '1px'};padding-bottom: #{config.first_padding_bottom or '1px'};padding-left: #{config.first_padding_left or '1px'};padding-right: #{config.first_padding_right or '1px'};">
+                            <t t-if="product_code">
+                                <div t-esc="line.get('default_code_0')" t-attf-style="font-size:#{config.product_code_size or '7px'};"/>
+                            </t>
+                            <t t-if="product_variant">
+                                <div t-esc="line.get('variants_0')" t-attf-style="font-size:#{config.product_variant_size or '7px'};"/>
+                            </t>
+                            <t t-if="line.get('code_0')">
+                                <div
+                                    t-raw="get_barcode_string(line.get('code_0'), data['form'])" />
+                            </t>
+                            <t t-if="price_display">
+                                <strong>
+                                    <div t-esc="line.get('list_price_0')"
+                                        t-attf-style="font-size:#{config.price_display_size or '10px'};"/>
+                                </strong>
+                            </t>
+                            <t t-if="product_name">
+                                <div t-esc="line.get('name_0')" t-attf-style="font-size:#{config.product_name_size or '7px'};"/>
+                            </t>
+                        </td>
+                        <td t-attf-style="width:50%;padding-top: #{config.second_padding_top or '1px'};padding-bottom: #{config.second_padding_bottom or '1px'};padding-left: #{config.second_padding_left or '1px'};padding-right: #{config.second_padding_right or '1px'};">
+                            <t t-if="product_code">
+                                <div t-esc="line.get('default_code_1')" t-attf-style="font-size:#{config.product_code_size or '7px'};"/>
+                            </t>
+                            <t t-if="product_variant">
+                                <div t-esc="line.get('variants_1')" t-attf-style="font-size:#{config.product_variant_size or '7px'};"/>
+                            </t>
+                            <t t-if="line.get('code_1')">
+                                <div
+                                    t-raw="get_barcode_string(line.get('code_1'), data['form'])" />
+                            </t>
+                            <t t-if="price_display">
+                                <strong>
+                                    <div t-esc="line.get('list_price_1')"
+                                        t-attf-style="font-size:#{config.price_display_size or '10px'};"/>
+                                </strong>
+                            </t>
+                            <t t-if="product_name">
+                                <div t-esc="line.get('name_1')" t-attf-style="font-size:#{config.product_name_size or '7px'};"/>
+                            </t>
+                        </td>
+                    </tr>
+                </table>
+                </t>
+            </div>
+        </t>
+    </template>
+</odoo>

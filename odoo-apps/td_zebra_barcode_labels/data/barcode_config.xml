@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="default_tdzebrabarcode_configuration" model="tdzebrabarcode.configuration">
+        <field name="page_width" eval="76" />
+        <field name="page_height" eval="25" />
+        <field name="barcode_height" eval="300" />
+        <field name="barcode_width" eval="1400" />
+        <field name="display_height" eval="40" />
+        <field name="display_width" eval="120" />
+        <field name="margin_top" eval="1" />
+        <field name="margin_bottom" eval="1" />
+        <field name="margin_left" eval="1" />
+        <field name="margin_right" eval="1" />
+        <field name="barcode_type">EAN13</field>
+        <field name="currency_position">after</field>
+        <field name="humanreadable" eval="False" />
+        <field name="product_name" eval="True" />
+        <field name="price_display" eval="True" />
+        <field name="barcode_field">barcode</field>
+    </record>
+</odoo>

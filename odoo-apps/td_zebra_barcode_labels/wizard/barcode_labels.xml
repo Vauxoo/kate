@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Barcode Lables -->
+    <record id="view_zbarcode_labels" model="ir.ui.view">
+        <field name="name">Barcode Labels</field>
+        <field name="model">tdzebrabarcode.labels</field>
+        <field name="arch" type="xml">
+            <form string="Barcode Labels">
+                <group colspan="4" string="Products To Print">
+                    <field name="product_get_ids" nolabel="1">
+                        <tree string="Product" editable="bottom">
+                            <field name="product_id"
+                                options='{"no_open": True,"no_create": 1, "no_create_edit": 1}' />
+                            <field name="qty" />
+                        </tree>
+                    </field>
+                </group>
+                <label
+                    string="More information about barcode configuration data, please navigate to inventory > zebra barcode > barcode config menu."
+                    colspan="4" />
+                <footer>
+                    <button name="print_report" string="Print"
+                        type="object" class="oe_highlight" />
+                    or
+                    <button string="Cancel" class="oe_link"
+                        special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_zbarcode_labels" model="ir.actions.act_window">
+        <field name="name">Zebra Barcode Labels</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">tdzebrabarcode.labels</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_zbarcode_labels" />
+        <field name="target">new</field>
+    </record>
+
+</odoo>

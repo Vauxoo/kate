@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="group_zbarcode_labels" model="res.groups">
+        <field name="name">Zebra Barcode Labels (2 Labels/Page)</field>
+    </record>
+
+</odoo>
