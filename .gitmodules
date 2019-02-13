@@ -1,9 +1,9 @@
 [submodule "others/it-projects-pos-addons"]
 	path = others/it-projects-pos-addons
-	url = git@github.com:/ClearCorp/it-projects-pos-addons
+	url = git@github.com:clearcorp/it-projects-pos-addons.git
 [submodule "others/it-projects-misc-addons"]
 	path = others/it-projects-misc-addons
-	url = git@github.com:/ClearCorp/it-projects-misc-addons
+	url = git@github.com:clearcorp/it-projects-misc-addons.git
 [submodule "clearcorp/odoo-einvoicing"]
 	path = clearcorp/odoo-einvoicing
 	url = git@github.com:clearcorp/odoo-einvoicing.git
