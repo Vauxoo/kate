@@ -6,7 +6,7 @@
 	url = git@github.com:clearcorp/it-projects-misc-addons.git
 [submodule "clearcorp/odoo-einvoicing"]
 	path = clearcorp/odoo-einvoicing
-	url = git@github.com:clearcorp/odoo-einvoicing.git
+	url = git@git.vauxoo.com:vauxoo/costarica.git
 [submodule "oca/oca-stock-logistics-barcode"]
 	path = oca/oca-stock-logistics-barcode
 	url = git@github.com:clearcorp/oca-stock-logistics-barcode.git
