@@ -1,0 +1,20 @@
+[submodule "server-tools"]
+	path = server-tools
+	url = git@github.com:Vauxoo/server-tools.git
+	branch = 11.0
+[submodule "costarica"]
+	path = costarica
+	url = git@git.vauxoo.com:vauxoo/costarica.git
+	branch = 11.0
+[submodule "kate"]
+	path = kate
+	url = git@git.vauxoo.com:vauxoo/kate.git
+	branch = 11.0
+[submodule "stock-logistics-barcode"]
+	path = stock-logistics-barcode
+	url = git@github.com:vauxoo/stock-logistics-barcode.git
+	branch = 11.0
+[submodule "addons-yelizariev"]
+	path = addons-yelizariev
+	url = git@github.com:vauxoo/addons-yelizariev.git
+	branch = 11.0
