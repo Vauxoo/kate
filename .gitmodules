@@ -1,20 +1,9 @@
-[submodule "server-tools"]
-	path = server-tools
-	url = git@github.com:Vauxoo/server-tools.git
-	branch = 12.0
-[submodule "costarica"]
-	path = costarica
-	url = git@git.vauxoo.com:vauxoo/costarica.git
-	branch = 12.0
+
 [submodule "kate"]
 	path = kate
 	url = git@git.vauxoo.com:vauxoo/kate.git
-	branch = 12.0
-[submodule "stock-logistics-barcode"]
-	path = stock-logistics-barcode
-	url = git@github.com:vauxoo/stock-logistics-barcode.git
-	branch = 12.0
-[submodule "addons-yelizariev"]
-	path = addons-yelizariev
-	url = git@github.com:vauxoo/addons-yelizariev.git
-	branch = 12.0
+	branch = 16.0-migrate_module-slitheryduke11
+[submodule "costarica"]
+	path = costarica
+	url = git@git.vauxoo.com:vauxoo/costarica.git
+	branch = 16.0
