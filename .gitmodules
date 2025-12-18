@@ -1,12 +1,12 @@
 [submodule "kate"]
 	path = kate
 	url = git@git.vauxoo.com:vauxoo/kate.git
-	branch = 16.0
+	branch = 19.0
 [submodule "costarica"]
 	path = costarica
 	url = git@git.vauxoo.com:vauxoo/costarica.git
-	branch = 16.0
+	branch = 19.0
 [submodule "edi-document"]
 	path = edi-document
 	url = git@git.vauxoo.com:vauxoo/edi-document.git
-	branch = 16.0
+	branch = 19.0
